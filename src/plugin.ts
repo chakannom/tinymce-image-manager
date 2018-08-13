@@ -1,8 +1,8 @@
 import * as kebabCase from "lodash/kebabCase";
 
 const plugin = (editor: any, url: String) => {
-  editor.addButton("chakannomTinymceImageManager", {
-    text: "Kebabify",
+  editor.addButton("chakannom_img_manager", {
+    text: "chakannom_img_manager",
     icon: false,
     onclick: () => {
       // Open window
