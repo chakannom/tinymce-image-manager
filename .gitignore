@@ -1,7 +1,9 @@
 node_modules
+.idea
 *.log
 dist
 .DS_Store
 .vscode
 typings
 yarn.lock
+package-lock.json
