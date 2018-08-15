@@ -1,5 +1,5 @@
-import plugin from "./plugin";
+import plugin from './plugin';
 
 declare var tinymce: any;
 
-tinymce.PluginManager.add("chakannom_img_manager", plugin);
+tinymce.PluginManager.add('chakannom_img_manager', plugin);
