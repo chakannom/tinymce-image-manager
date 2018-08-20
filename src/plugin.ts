@@ -11,7 +11,7 @@ const plugin = (editor: any, url: String) => {
         // Open window
         editor.windowManager.open({
             title: 'Insert image',
-            url: './images.html',
+            url: url + '/app/index.html',
             width : 800,
             height : 300,
             onsubmit (e: any) {
