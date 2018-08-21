@@ -3,6 +3,10 @@
 ######################
 /build/www/**
 /src/test/javascript/coverage/
+dist
+typings
+yarn.lock
+package-lock.json
 
 ######################
 # Node
