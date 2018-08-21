@@ -1,11 +1,64 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-    <link rel="stylesheet" type="text/css" href="./main.css">
-    <title>Chakannom Image Manager for TinyMCE4</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0">
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"/>
+<link type="text/css" rel="stylesheet" href="css/bootstrap-vue.css"/>
+<link type="text/css" rel="stylesheet" href="css/main.css">
+<title>Chakannom Image Manager for TinyMCE4</title>
 </head>
 <body>
-Chakannom Image Manager for TinyMCE4
+<div id="imageManagerApp">
+    <b-tabs card>
+        <b-tab no-body title="Upload" active>
+            <form>
+                <input type="text" placeholder="Image name" name="caption" />
+
+                <div class="row" style="width:40%; margin-top:12px;">
+                    <div class="col-md-8">
+                        <input type="file" name="file-image" />
+                    </div>
+                    <div class="col-md-4">
+                        <button class="btn btn-default" type="button" id="btn-upload" data-loading-text="Uploading...">Upload</button>
+                    </div>
+                </div>
+
+                <img src="" class="img-thumbnail" alt="SIM" id="uploaded-img" />
+
+                <div class="image-manager-uploaded-image"></div>
+            </form>
+
+            <span id="uploading-status"></span>
+        </b-tab>
+        <b-tab no-body title="List" >
+            <div class="col-md-8" style="margin-top:10px;">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="search">
+                    <span class="input-group-btn">
+	                    <button class="btn btn-default" type="button">Search</button>
+	                </span>
+                </div>
+            </div>
+
+            <div class="row" style="margin:0px; margin-top:20px;">
+                <div class="simbox" style="margin-bottom:10px;" v-for="n in 10">
+                    <div class="simbox-item img-thumbnail">
+                        <img src="https://via.placeholder.com/200x150" class="simbox-img" />
+                        <div class="img-name">Image Name</div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <b-pagination align="center" :total-rows="100" v-model="currentPage" :per-page="10"></b-pagination>
+            </div>
+        </b-tab>
+    </b-tabs>
+</div>
+<script src="js/vue.min.js"></script>
+<script src="js/polyfill.min.js"></script>
+<script src="js/bootstrap-vue.js"></script>
+<script src="js/app.js"></script>
 </body>
 </html>

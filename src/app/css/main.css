@@ -1,0 +1,58 @@
+.simbox {
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.simbox-img {
+    /*max-width: 100%;*/
+    max-height: 110px;
+    cursor: pointer;
+}
+
+.simbox-item {
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.simbox-item:hover > .img-name {
+    -webkit-animation:myfirst 0.3s; /* Chrome, Safari, Opera */
+    animation:myfirst 0.3s;
+    background: rgba(0,0,0,1);
+}
+
+.simbox-item .img-name {
+    position: absolute;
+    bottom:4px;
+    left:4px;
+    width: 96%;
+    color: white;
+    text-align: center;
+    background: rgba(0,0,0,0.6);
+}
+
+.selected.simbox .img-thumbnail, .simbox:hover > .img-thumbnail {
+    border-color:red;
+}
+.simbox .img-thumbnail,
+#myModal .modal-content,
+#myModal .btn,
+#myModal .nav-tabs>li>a, #myModal * {
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px;
+}
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes myfirst
+{
+    from { background-color: rgba(0,0,0,0.6) }
+    to { background-color: rgba(0,0,0,1) }
+}
+
+/* Standard syntax */
+@keyframes myfirst
+{
+    from { background-color: rgba(0,0,0,0.6) }
+    to { background-color: rgba(0,0,0,1) }
+}
