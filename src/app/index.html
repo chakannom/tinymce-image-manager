@@ -11,47 +11,33 @@
 <body>
 <div id="imageManagerApp">
     <b-tabs card>
-        <b-tab no-body title="Upload" active>
+        <b-tab title="Upload" no-body active>
             <form>
-                <input type="text" placeholder="Image name" name="caption" />
-
-                <div class="row" style="width:40%; margin-top:12px;">
-                    <div class="col-md-8">
-                        <input type="file" name="file-image" />
-                    </div>
-                    <div class="col-md-4">
-                        <button class="btn btn-default" type="button" id="btn-upload" data-loading-text="Uploading...">Upload</button>
+                <div style="border-bottom: 1px solid rgba(0,0,0,.125)">
+                    <b-button variant="primary" size="sm" class="select-file">
+                        <label for="select_file" style="margin-bottom: 0">Select File</label>
+                    </b-button>
+                    <input type="file" id="select_file" style="height: 0px; visibility: hidden; position: absolute;" accept="image/*" multiple/>
+                    <div class="select-file-message">Use a JPG, GIF, or PNG file.</div>
+                </div>
+                <div class="row" style="margin:0px; margin-top:20px;">
+                    <div class="img-container" style="margin-bottom:10px;" v-for="n in 5">
+                        <div class="img-container-item img-thumbnail">
+                            <img src="https://via.placeholder.com/200x150"/>
+                        </div>
                     </div>
                 </div>
-
-                <img src="" class="img-thumbnail" alt="SIM" id="uploaded-img" />
-
                 <div class="image-manager-uploaded-image"></div>
             </form>
-
             <span id="uploading-status"></span>
         </b-tab>
-        <b-tab no-body title="List" >
-            <div class="col-md-8" style="margin-top:10px;">
-                <div class="input-group">
-                    <input type="text" class="form-control" id="search">
-                    <span class="input-group-btn">
-	                    <button class="btn btn-default" type="button">Search</button>
-	                </span>
-                </div>
-            </div>
-
+        <b-tab title="List" no-body>
             <div class="row" style="margin:0px; margin-top:20px;">
-                <div class="simbox" style="margin-bottom:10px;" v-for="n in 10">
-                    <div class="simbox-item img-thumbnail">
-                        <img src="https://via.placeholder.com/200x150" class="simbox-img" />
-                        <div class="img-name">Image Name</div>
+                <div class="img-container" style="margin-bottom:10px;" v-for="n in 10">
+                    <div class="img-container-item img-thumbnail">
+                        <img src="https://via.placeholder.com/200x150"/>
                     </div>
                 </div>
-            </div>
-
-            <div>
-                <b-pagination align="center" :total-rows="100" v-model="currentPage" :per-page="10"></b-pagination>
             </div>
         </b-tab>
     </b-tabs>
