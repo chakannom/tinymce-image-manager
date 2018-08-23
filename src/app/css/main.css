@@ -1,6 +1,26 @@
 ul:focus {
     outline: none;
 }
+.card-header {
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+    background-color: #f7f7f7;
+}
+.tab-content {
+    position: relative;
+    margin: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+    padding-top: 54px;
+}
+.select-file-container {
+    position: fixed;
+    width: 100%;
+    z-index: 999;
+    background-color: #fff;
+    border-bottom: 1px solid rgba(0,0,0,.125)
+}
 .select-file {
     margin: 15px 15px 5px;
 }
@@ -10,10 +30,14 @@ ul:focus {
     white-space: nowrap;
 }
 .img-container {
-    display: inline-block;
-    margin-left: 10px;
+    margin: 20px 0 0 0;
 }
 .img-container-item {
+    display: inline-block;
+    margin-left: 10px;
+    margin-bottom:10px;
+}
+.img-thumbnail {
     position: relative;
     cursor: pointer;
     overflow: hidden;
@@ -23,26 +47,13 @@ ul:focus {
     cursor: pointer;
 }
 
-.selected.img-container .img-thumbnail, .img-container:hover > .img-thumbnail {
+.selected.img-container-item .img-thumbnail,
+.img-container-item:hover > .img-thumbnail {
     border-color: #fd7e14;
 }
 .select-file,
-.img-container .img-thumbnail {
+.img-container-item .img-thumbnail {
     -webkit-border-radius: 0px;
     -moz-border-radius: 0px;
     border-radius: 0px;
-}
-
-/* Chrome, Safari, Opera */
-@-webkit-keyframes myfirst
-{
-    from { background-color: rgba(0,0,0,0.6) }
-    to { background-color: rgba(0,0,0,1) }
-}
-
-/* Standard syntax */
-@keyframes myfirst
-{
-    from { background-color: rgba(0,0,0,0.6) }
-    to { background-color: rgba(0,0,0,1) }
 }

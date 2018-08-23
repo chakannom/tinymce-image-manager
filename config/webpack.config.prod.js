@@ -2,7 +2,7 @@ const path = require("path");
 const webpack = require("webpack");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 
-const pluginName = "chakannom-tinymce-image-manager";
+const pluginName = "ckn_image";
 
 module.exports = {
     entry: {
