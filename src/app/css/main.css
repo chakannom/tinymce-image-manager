@@ -41,12 +41,8 @@ ul:focus {
     position: relative;
     cursor: pointer;
     overflow: hidden;
-}
-.img-thumbnail img {
     max-height: 110px;
-    cursor: pointer;
 }
-
 .selected.img-container-item .img-thumbnail,
 .img-container-item:hover > .img-thumbnail {
     border-color: #fd7e14;

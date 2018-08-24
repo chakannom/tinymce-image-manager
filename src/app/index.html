@@ -17,14 +17,12 @@
                     <b-button variant="primary" size="sm" class="select-file">
                         <label for="select_file" style="margin-bottom: 0; cursor: pointer;">Select File</label>
                     </b-button>
-                    <input type="file" id="select_file" style="height: 0px; visibility: hidden; position: absolute;" accept="image/*" multiple/>
+                    <input type="file" id="select_file" style="height: 0px; visibility: hidden; position: absolute;" accept="image/*" @change="uploadFiles($event)" multiple/>
                     <div class="select-file-message">Use a JPG, GIF, or PNG file.</div>
                 </div>
                 <div class="row img-container" style="margin-top: 0; padding-top: 96px;">
-                    <div class="img-container-item" style="" v-for="n in 5">
-                        <div class="img-thumbnail">
-                            <img src="https://via.placeholder.com/200x150"/>
-                        </div>
+                    <div class="img-container-item" v-for="image in imagesFromUpload">
+                        <b-img v-bind:id="image.url ? image.id : null" thumbnail v-bind:src="image.url ? image.url : image.file"/>
                     </div>
                 </div>
                 <div class="image-manager-uploaded-image"></div>
@@ -33,10 +31,8 @@
         </b-tab>
         <b-tab title="From List" no-body>
             <div class="row img-container">
-                <div class="img-container-item" style="margin-bottom:10px;" v-for="n in 10">
-                    <div class="img-thumbnail">
-                        <img src="https://via.placeholder.com/200x150"/>
-                    </div>
+                <div class="img-container-item" v-for="image in imagesFromBlog">
+                    <b-img v-bind:id="image.id" thumbnail v-bind:src="image.url"/>
                 </div>
             </div>
         </b-tab>
@@ -45,6 +41,7 @@
 <script src="js/vue.min.js"></script>
 <script src="js/polyfill.min.js"></script>
 <script src="js/bootstrap-vue.js"></script>
+<script src="js/axios.min.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>
