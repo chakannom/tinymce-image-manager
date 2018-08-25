@@ -7,7 +7,7 @@ var imageManagerApp = new Vue({
         imagesFromBlog: []
     },
     created: function() {
-        var imagesFromBlogUrl = 'sample/sample.json';
+        var imagesFromBlogUrl = 'sample/imagesFromBlog.json';
         var uri = window.location.href.split('?');
         if (uri.length > 1) {
             var vars = uri[1].split('&');
@@ -32,12 +32,21 @@ var imageManagerApp = new Vue({
             this.$el.querySelector('#select_file').click();
         },
         uploadFiles: function(event) {
+            var imageFromUploadUrl = 'sample/imageFromUpload.json';
             var vm = this;
             for (var i = 0; i < event.target.files.length; i++) {
                 var file = event.target.files[i];
                 var reader = new FileReader();
                 reader.onload = function(event) {
                     vm.imagesFromUpload.push({id: undefined, src: undefined, file: event.target.result});
+                    // var formData = new FormData();
+                    // formData.append('uploadFile', file);
+                    // formData.append('filename', file.name);
+                    // vm.$http.post('sample/imageFromUpload' + i + '.json', formData).then(function(response) {
+                    //     image.id = response.data.id;
+                    //     image.url = response.data.url;
+                    //     image.file = undefined;
+                    // });
                 };
                 reader.readAsDataURL(file);
             }
