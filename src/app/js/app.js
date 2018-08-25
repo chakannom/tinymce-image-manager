@@ -28,7 +28,7 @@ var imageManagerApp = new Vue({
         });
     },
     methods: {
-        clickSelectFile: function(event) {
+        selectFile: function(event) {
             this.$el.querySelector('#select_file').click();
         },
         uploadFiles: function(event) {
