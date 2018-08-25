@@ -43,6 +43,9 @@ ul:focus {
     overflow: hidden;
     max-height: 110px;
 }
+.img-blur {
+    opacity:0.5;
+}
 .selected.img-container-item .img-thumbnail,
 .img-container-item:hover > .img-thumbnail {
     border-color: #fd7e14;

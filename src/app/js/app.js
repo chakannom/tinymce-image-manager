@@ -6,14 +6,14 @@ var imageManagerApp = new Vue({
         imagesFromUpload: [],
         imagesFromBlog: []
     },
-    created() {
-        let imagesFromBlogUrl = 'sample/sample.json';
-        const uri = window.location.href.split('?');
+    created: function() {
+        var imagesFromBlogUrl = 'sample/sample.json';
+        var uri = window.location.href.split('?');
         if (uri.length > 1) {
-            const vars = uri[1].split('&');
-            const getVars = {};
-            let tmp = '';
-            vars.forEach(function(v){
+            var vars = uri[1].split('&');
+            var getVars = {};
+            var tmp = '';
+            vars.forEach(function(v) {
                 tmp = v.split('=');
                 if(tmp.length == 2)
                     getVars[tmp[0]] = tmp[1];
@@ -22,13 +22,24 @@ var imageManagerApp = new Vue({
                 imagesFromBlogUrl = getVars['iib_u'];
             }
         }
-        this.$http.get(imagesFromBlogUrl).then((response) => {
-            this.imagesFromBlog = response.data;
+        var vm = this;
+        this.$http.get(imagesFromBlogUrl).then(function(response) {
+            vm.imagesFromBlog = response.data;
         });
     },
     methods: {
-        uploadFiles(event) {
-            for (const file of event.target.files) {
+        clickSelectFile: function(event) {
+            this.$el.querySelector('#select_file').click();
+        },
+        uploadFiles: function(event) {
+            var vm = this;
+            for (var i = 0; i < event.target.files.length; i++) {
+                var file = event.target.files[i];
+                var reader = new FileReader();
+                reader.onload = function(event) {
+                    vm.imagesFromUpload.push({id: undefined, src: undefined, file: event.target.result});
+                };
+                reader.readAsDataURL(file);
             }
         }
     }
