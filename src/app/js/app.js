@@ -36,9 +36,10 @@ var imageManagerApp = new Vue({
             var vm = this;
             for (var i = 0; i < event.target.files.length; i++) {
                 var file = event.target.files[i];
+                console.log(file);
                 var reader = new FileReader();
                 reader.onload = function(event) {
-                    vm.imagesFromUpload.push({id: undefined, src: undefined, file: event.target.result});
+                    vm.imagesFromUpload.push({id: undefined, src: undefined, file: event.target.result, fid: uuidv4()});
                     // var formData = new FormData();
                     // formData.append('uploadFile', file);
                     // formData.append('filename', file.name);
