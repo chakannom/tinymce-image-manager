@@ -3,6 +3,7 @@ Vue.prototype.$http = axios;
 var imageManagerApp = new Vue({
     el: '#imageManagerApp',
     data: {
+        presignedUrl: 'sample/presignedUrl.json',
         imageFromUploadUrl: 'sample/imageFromUpload.json',
         imagesFromUpload: [],
         imagesFromBlogUrl: 'sample/imagesFromBlog.json',
