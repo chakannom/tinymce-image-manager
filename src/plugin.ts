@@ -1,6 +1,16 @@
 import * as kebabCase from 'lodash/kebabCase';
+import settings from './api/settings';
 
 const plugin = (editor: any, url: String) => {
+    const presignedUrl = settings.getPresignedUrl(editor);
+    const imageFromUploadUrl = settings.getImageFromUploadUrl(editor);
+    const imagesFromBlogUrl = settings.getImagesFromBlogUrl(editor);
+    const queryParamMap = { ps_u: presignedUrl, ifu_u: imageFromUploadUrl, ifb_u: imagesFromBlogUrl };
+    const queryParams = Object.keys(queryParamMap).map(function (key) {
+        return key + '=' + encodeURIComponent(queryParamMap[key]);
+    }).join('&');
+    const appUrl = url + '/app/index.html?' + queryParams;
+
     editor.addButton('ckn_image', {
         icon: 'image',
         tooltip: 'Insert image',
@@ -11,7 +21,7 @@ const plugin = (editor: any, url: String) => {
         // Open window
         editor.windowManager.open({
             title: 'Insert image',
-            url: url + '/app/index.html',
+            url: appUrl,
             width : 750,
             height : 450,
             buttons: [

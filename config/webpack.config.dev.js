@@ -1,6 +1,9 @@
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
+    devServer: {
+        contentBase: './src'
+    },
     entry: './src/index.ts',
     resolve: {
         extensions: ['.webpack.js', '.web.js', '.ts', '.js']

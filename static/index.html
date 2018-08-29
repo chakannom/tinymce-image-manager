@@ -1,16 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
-  <script>
-    tinymce.init({
-      selector:'textarea',
-      plugins: 'ckn_image',
-      toolbar: 'ckn_image'
-    });
-  </script>
+    <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+    <script>
+        tinymce.init({
+            selector:'textarea',
+            toolbar: 'ckn_image',
+            external_plugins: {
+                'ckn_image': 'http://localhost:8080/bundle.js'
+            },
+            ckn_image_presigned_url: 'presigned-url.html',
+            ckn_image_image_upload_url: 'image-upload-url.html',
+            ckn_image_images_blog_url: 'images-blog.html'
+        });
+    </script>
 </head>
 <body>
-  <textarea>Testing chakannomTinymceImageManager.</textarea>
+    <textarea>Testing chakannomTinymceImageManager.</textarea>
 </body>
 </html>

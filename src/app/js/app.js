@@ -3,7 +3,7 @@ Vue.prototype.$http = axios;
 var imageManagerApp = new Vue({
     el: '#imageManagerApp',
     data: {
-        presignedUrl: 'sample/presignedUrl.json',
+        presignedUrl: undefined,
         imageFromUploadUrl: 'sample/imageFromUpload.json',
         imagesFromUpload: [],
         imagesFromBlogUrl: 'sample/imagesFromBlog.json',
@@ -12,16 +12,21 @@ var imageManagerApp = new Vue({
     created: function() {
         var uri = window.location.href.split('?');
         if (uri.length > 1) {
-            var vars = uri[1].split('&');
-            var getVars = {};
-            var tmp = '';
-            vars.forEach(function(v) {
-                tmp = v.split('=');
-                if(tmp.length == 2)
-                    getVars[tmp[0]] = tmp[1];
+            var queryParamMap = {};
+            uri[1].split('&').forEach(function(queryParam) {
+                var tmp = queryParam.split('=');
+                if(tmp.length === 2) {
+                    queryParamMap[tmp[0]] = tmp[1];
+                }
             });
-            if (getVars['iib_u'] !== undefined && getVars['iib_u'] !== '') {
-                this.imagesFromBlogUrl = getVars['iib_u'];
+            if (queryParamMap['ps_u'] !== undefined && queryParamMap['ps_u'] !== '') {
+                this.presignedUrl = decodeURIComponent(queryParamMap['ps_u']);
+            }
+            if (queryParamMap['ifu_u'] !== undefined && queryParamMap['ifu_u'] !== '') {
+                this.imageFromUploadUrl = decodeURIComponent(queryParamMap['ifu_u']);
+            }
+            if (queryParamMap['ifb_u'] !== undefined && queryParamMap['ifb_u'] !== '') {
+                this.imagesFromBlogUrl = decodeURIComponent(queryParamMap['ifb_u']);
             }
         }
     },
