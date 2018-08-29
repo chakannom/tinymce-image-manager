@@ -4,7 +4,9 @@ module.exports = {
     devServer: {
         contentBase: './src'
     },
-    entry: './src/index.ts',
+    entry: {
+        'plugin': './src/index.ts'
+    },
     resolve: {
         extensions: ['.webpack.js', '.web.js', '.ts', '.js']
     },

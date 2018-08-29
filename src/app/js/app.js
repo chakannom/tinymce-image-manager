@@ -3,7 +3,7 @@ Vue.prototype.$http = axios;
 var imageManagerApp = new Vue({
     el: '#imageManagerApp',
     data: {
-        presignedUrl: undefined,
+        presignedPutUrl: undefined,
         imageFromUploadUrl: 'sample/imageFromUpload.json',
         imagesFromUpload: [],
         imagesFromBlogUrl: 'sample/imagesFromBlog.json',
@@ -19,8 +19,8 @@ var imageManagerApp = new Vue({
                     queryParamMap[tmp[0]] = tmp[1];
                 }
             });
-            if (queryParamMap['ps_u'] !== undefined && queryParamMap['ps_u'] !== '') {
-                this.presignedUrl = decodeURIComponent(queryParamMap['ps_u']);
+            if (queryParamMap['psp_u'] !== undefined && queryParamMap['psp_u'] !== '') {
+                this.presignedPutUrl = decodeURIComponent(queryParamMap['psp_u']);
             }
             if (queryParamMap['ifu_u'] !== undefined && queryParamMap['ifu_u'] !== '') {
                 this.imageFromUploadUrl = decodeURIComponent(queryParamMap['ifu_u']);

@@ -2,14 +2,14 @@ import * as kebabCase from 'lodash/kebabCase';
 import settings from './api/settings';
 
 const plugin = (editor: any, url: String) => {
-    const presignedUrl = settings.getPresignedUrl(editor);
-    const imageFromUploadUrl = settings.getImageFromUploadUrl(editor);
-    const imagesFromBlogUrl = settings.getImagesFromBlogUrl(editor);
-    const queryParamMap = { ps_u: presignedUrl, ifu_u: imageFromUploadUrl, ifb_u: imagesFromBlogUrl };
-    const queryParams = Object.keys(queryParamMap).map(function (key) {
-        return key + '=' + encodeURIComponent(queryParamMap[key]);
-    }).join('&');
-    const appUrl = url + '/app/index.html?' + queryParams;
+    const queryParamList = [];
+    const presignedPutUrlQuery = settings.getPresignedPutUrlQuery(editor);
+    const imageFromUploadUrlQuery = settings.getImageFromUploadUrlQuery(editor);
+    const imagesFromBlogUrlQuery = settings.getImagesFromBlogUrlQuery(editor);
+    if (presignedPutUrlQuery !== undefined) queryParamList.push(presignedPutUrlQuery);
+    if (imageFromUploadUrlQuery !== undefined) queryParamList.push(imageFromUploadUrlQuery);
+    if (imagesFromBlogUrlQuery !== undefined) queryParamList.push(imagesFromBlogUrlQuery);
+    const appUrl = url + '/app/index.html?' + queryParamList.join('&');
 
     editor.addButton('ckn_image', {
         icon: 'image',
