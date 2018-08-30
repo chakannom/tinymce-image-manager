@@ -10,7 +10,7 @@
     "build": "webpack --config config/webpack.config.prod.js --progress"
   },
   "author": "",
-  "license": "GPL-3.0",
+  "license": "cc-by-nc-sa-4.0",
   "devDependencies": {
     "copy-webpack-plugin": "^4.0.1",
     "html-webpack-plugin": "^2.26.0",
