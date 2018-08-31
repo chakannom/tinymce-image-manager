@@ -48,7 +48,7 @@ var imageManagerApp = new Vue({
         },
         getToken: function(tokenName) {
             return localStorage.getItem(tokenName) || sessionStorage.getItem(tokenName);
-        }
+        },
         selectFile: function(event) {
             this.$el.querySelector('#select_file').click();
         },
@@ -60,21 +60,27 @@ var imageManagerApp = new Vue({
                 reader.onload = function(event) {
                     var fileuuid = uuidv4();
                     vm.imagesFromUpload.push({id: undefined, src: undefined, file: event.target.result, fid: fileuuid});
-                    var formData = new FormData();
-                    formData.append('uploadFile', file);
-                    formData.append('filename', file.name);
-                    formData.append('fileuuid', fileuuid);
-                    vm.$http.post(vm.imageFromUploadUrl, formData).then(function(response) {
-                        for (var j = 0; j < vm.imagesFromUpload.length; j++) {
-                            if (vm.imagesFromUpload[j].fid === response.config.data.get('fileuuid')) {
-                                vm.imagesFromUpload[j].id = response.data.id;
-                                vm.imagesFromUpload[j].url = response.data.url;
-                                vm.imagesFromUpload[j].file = undefined;
-                                vm.imagesFromUpload[j].fid = undefined;
-                                break;
+                    if (!this.presignedPutUrl) {
+                        var formData = new FormData();
+                        formData.append('uploadFile', file);
+                        formData.append('filename', file.name);
+                        formData.append('fileuuid', fileuuid);
+                        vm.$http.post(vm.imageFromUploadUrl, formData).then(function (response) {
+                            for (var j = 0; j < vm.imagesFromUpload.length; j++) {
+                                if (vm.imagesFromUpload[j].fid === response.config.data.get('fileuuid')) {
+                                    vm.imagesFromUpload[j].id = response.data.id;
+                                    vm.imagesFromUpload[j].url = response.data.url;
+                                    vm.imagesFromUpload[j].file = undefined;
+                                    vm.imagesFromUpload[j].fid = undefined;
+                                    break;
+                                }
                             }
-                        }
-                    });
+                        });
+                    } else {
+                        vm.$http.put('sample/imageFromUpload.json', file).then(function (response) {
+
+                        });
+                    }
                 };
                 reader.readAsDataURL(file);
             }
