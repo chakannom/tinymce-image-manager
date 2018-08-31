@@ -6,10 +6,12 @@ const plugin = (editor: any, url: String) => {
     const presignedPutUrlQuery = settings.getPresignedPutUrlQuery(editor);
     const imageFromUploadUrlQuery = settings.getImageFromUploadUrlQuery(editor);
     const imagesFromBlogUrlQuery = settings.getImagesFromBlogUrlQuery(editor);
+    const tokenName = settings.getTokenName(editor);
     if (presignedPutUrlQuery !== undefined) queryParamList.push(presignedPutUrlQuery);
     if (imageFromUploadUrlQuery !== undefined) queryParamList.push(imageFromUploadUrlQuery);
     if (imagesFromBlogUrlQuery !== undefined) queryParamList.push(imagesFromBlogUrlQuery);
-    const appUrl = url + '/app/index.html?' + queryParamList.join('&');
+    if (tokenName !== undefined) queryParamList.push(tokenName);
+    const appUrl = url + '/app/index.html?q=' + encodeURIComponent(btoa(queryParamList.join('&')));
 
     editor.addButton('ckn_image', {
         icon: 'image',

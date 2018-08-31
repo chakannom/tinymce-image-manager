@@ -7,30 +7,48 @@ var imageManagerApp = new Vue({
         imageFromUploadUrl: 'sample/imageFromUpload.json',
         imagesFromUpload: [],
         imagesFromBlogUrl: 'sample/imagesFromBlog.json',
-        imagesFromBlog: []
+        imagesFromBlog: [],
+        webStorageTokenName: 'sampleAuthToken'
     },
     created: function() {
-        var uri = window.location.href.split('?');
-        if (uri.length > 1) {
-            var queryParamMap = {};
-            uri[1].split('&').forEach(function(queryParam) {
-                var tmp = queryParam.split('=');
-                if(tmp.length === 2) {
-                    queryParamMap[tmp[0]] = tmp[1];
-                }
-            });
-            if (queryParamMap['psp_u'] !== undefined && queryParamMap['psp_u'] !== '') {
-                this.presignedPutUrl = decodeURIComponent(queryParamMap['psp_u']);
-            }
-            if (queryParamMap['ifu_u'] !== undefined && queryParamMap['ifu_u'] !== '') {
-                this.imageFromUploadUrl = decodeURIComponent(queryParamMap['ifu_u']);
-            }
-            if (queryParamMap['ifb_u'] !== undefined && queryParamMap['ifb_u'] !== '') {
-                this.imagesFromBlogUrl = decodeURIComponent(queryParamMap['ifb_u']);
-            }
-        }
+        this.init();
     },
     methods: {
+        init: function() {
+            var uri = window.location.href.split('?');
+            if (uri.length > 1) {
+                var q = uri[1].split('=');
+                if (q.length === 2) {
+                    var queryParams = atob(decodeURIComponent(q[1]));
+                    var queryParamMap = {};
+                    queryParams.split('&').forEach(function(queryParam) {
+                        var tmp = queryParam.split('=');
+                        if(tmp.length === 2) {
+                            queryParamMap[tmp[0]] = tmp[1];
+                        }
+                    });
+                    if (queryParamMap['psp_u'] !== undefined && queryParamMap['psp_u'] !== '') {
+                        this.presignedPutUrl = decodeURIComponent(queryParamMap['psp_u']);
+                    }
+                    if (queryParamMap['ifu_u'] !== undefined && queryParamMap['ifu_u'] !== '') {
+                        this.imageFromUploadUrl = decodeURIComponent(queryParamMap['ifu_u']);
+                    }
+                    if (queryParamMap['ifb_u'] !== undefined && queryParamMap['ifb_u'] !== '') {
+                        this.imagesFromBlogUrl = decodeURIComponent(queryParamMap['ifb_u']);
+                    }
+                    if (queryParamMap['ws_tn'] !== undefined && queryParamMap['ws_tn'] !== '') {
+                        this.webStorageTokenName = decodeURIComponent(queryParamMap['ws_tn']);
+                    }
+                }
+                var authenticationToken = this.getToken(this.webStorageTokenName);
+                if (typeof authenticationToken === 'string') {
+                    this.$http.defaults.headers.common['Authorization'] = 'Bearer ' + authenticationToken;
+                }
+            }
+        },
+        getToken: function(tokenName) {
+            return localStorage.getItem(tokenName) || sessionStorage.getItem(tokenName);
+        }
         selectFile: function(event) {
             this.$el.querySelector('#select_file').click();
         },
