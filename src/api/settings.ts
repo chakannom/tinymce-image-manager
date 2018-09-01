@@ -3,6 +3,11 @@ const getParams = function (editor) {
     return params ? params : undefined
 }
 
+const getBaseUrlQuery = function (editor) {
+    const baseUrl = getParams(editor)['base_url'];
+    return baseUrl ? 'bs_u=' + encodeURIComponent(baseUrl) : undefined;
+};
+
 const getPresignedPutUrlQuery = function (editor) {
     const presignedPutUrl = getParams(editor)['presigned_put_url'];
     return presignedPutUrl ? 'psp_u=' + encodeURIComponent(presignedPutUrl) : undefined;
@@ -30,6 +35,7 @@ const getTokenName = function (editor) {
 };
 
 export default {
+    getBaseUrlQuery,
     getPresignedPutUrlQuery,
     getImageFromUploadUrlQuery,
     getImagesFromBlogUrlQuery,

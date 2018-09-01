@@ -3,10 +3,12 @@ import settings from './api/settings';
 
 const plugin = (editor: any, url: String) => {
     const queryParamList = [];
+    const baseUrlQuery = settings.getBaseUrlQuery(editor);
     const presignedPutUrlQuery = settings.getPresignedPutUrlQuery(editor);
     const imageFromUploadUrlQuery = settings.getImageFromUploadUrlQuery(editor);
     const imagesFromBlogUrlQuery = settings.getImagesFromBlogUrlQuery(editor);
     const tokenName = settings.getTokenName(editor);
+    if (baseUrlQuery !== undefined) queryParamList.push(baseUrlQuery);
     if (presignedPutUrlQuery !== undefined) queryParamList.push(presignedPutUrlQuery);
     if (imageFromUploadUrlQuery !== undefined) queryParamList.push(imageFromUploadUrlQuery);
     if (imagesFromBlogUrlQuery !== undefined) queryParamList.push(imagesFromBlogUrlQuery);

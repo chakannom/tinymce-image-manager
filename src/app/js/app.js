@@ -3,10 +3,11 @@ Vue.prototype.$http = axios;
 var imageManagerApp = new Vue({
     el: '#imageManagerApp',
     data: {
+        baseUrl: 'http://localhost:8080/app',
         presignedPutUrl: undefined,
-        imageFromUploadUrl: 'sample/imageFromUpload.json',
+        imageFromUploadUrl: '/sample/imageFromUpload.json',
         imagesFromUpload: [],
-        imagesFromBlogUrl: 'sample/imagesFromBlog.json',
+        imagesFromBlogUrl: '/sample/imagesFromBlog.json',
         imagesFromBlog: [],
         webStorageTokenName: 'sampleAuthToken'
     },
@@ -27,6 +28,9 @@ var imageManagerApp = new Vue({
                             queryParamMap[tmp[0]] = tmp[1];
                         }
                     });
+                    if (queryParamMap['bs_u'] !== undefined && queryParamMap['bs_u'] !== '') {
+                        this.baseUrl = decodeURIComponent(queryParamMap['bs_u']);
+                    }
                     if (queryParamMap['psp_u'] !== undefined && queryParamMap['psp_u'] !== '') {
                         this.presignedPutUrl = decodeURIComponent(queryParamMap['psp_u']);
                     }
@@ -40,6 +44,7 @@ var imageManagerApp = new Vue({
                         this.webStorageTokenName = decodeURIComponent(queryParamMap['ws_tn']);
                     }
                 }
+                this.$http.defaults.baseURL = this.baseUrl;
                 var authenticationToken = this.getToken(this.webStorageTokenName);
                 if (typeof authenticationToken === 'string') {
                     this.$http.defaults.headers.common['Authorization'] = 'Bearer ' + authenticationToken;
@@ -53,37 +58,56 @@ var imageManagerApp = new Vue({
             this.$el.querySelector('#select_file').click();
         },
         uploadFiles: function(event) {
+            var files = event.target.files;
             var vm = this;
-            for (var i = 0; i < event.target.files.length; i++) {
-                var file = event.target.files[i];
+            for (var i = 0; i < files.length; i++) {
                 var reader = new FileReader();
-                reader.onload = function(event) {
-                    var fileuuid = uuidv4();
-                    vm.imagesFromUpload.push({id: undefined, src: undefined, file: event.target.result, fid: fileuuid});
-                    if (!this.presignedPutUrl) {
-                        var formData = new FormData();
-                        formData.append('uploadFile', file);
-                        formData.append('filename', file.name);
-                        formData.append('fileuuid', fileuuid);
-                        vm.$http.post(vm.imageFromUploadUrl, formData).then(function (response) {
-                            for (var j = 0; j < vm.imagesFromUpload.length; j++) {
-                                if (vm.imagesFromUpload[j].fid === response.config.data.get('fileuuid')) {
-                                    vm.imagesFromUpload[j].id = response.data.id;
-                                    vm.imagesFromUpload[j].url = response.data.url;
-                                    vm.imagesFromUpload[j].file = undefined;
-                                    vm.imagesFromUpload[j].fid = undefined;
-                                    break;
-                                }
-                            }
-                        });
-                    } else {
-                        vm.$http.put('sample/imageFromUpload.json', file).then(function (response) {
-
-                        });
-                    }
-                };
-                reader.readAsDataURL(file);
+                reader.onload = (function(file) {
+                    return function(e) {
+                        var images = {id: undefined, url: e.target.result, fid: uuidv4()};
+                        vm.imagesFromUpload.push(images);
+                        if (!vm.presignedPutUrl) {
+                            vm.uploadFormData(file, images.fid);
+                        } else {
+                            vm.uploadPresignedPutUrl(file, images.fid);
+                        }
+                    };
+                })(files[i]);
+                reader.readAsDataURL(files[i]);
             }
+
+            console.log(vm.imagesFromUpload);
+        },
+        uploadFormData: function(file, fid) {
+            var formData = new FormData();
+            formData.append('uploadFile', file);
+            formData.append('filename', file.name);
+            formData.append('fid', fid);
+            this.$http.post(this.imageFromUploadUrl, formData).then(function (response) {
+                for (var j = 0; j < this.imagesFromUpload.length; j++) {
+                    if (this.imagesFromUpload[j].fid === response.config.data.get('fid')) {
+                        this.imagesFromUpload[j].id = response.data.id;
+                        this.imagesFromUpload[j].url = response.data.url;
+                        this.imagesFromUpload[j].fid = undefined;
+                        break;
+                    }
+                }
+            });
+        },
+        uploadPresignedPutUrl: function(file, fid) {
+            this.$http.get(this.presignedPutUrl, { params: { filename: file.name } }).then(function (response) {
+                this.$http.put(response.body.url, file).then(function (res) {
+                    console.log(res.url.split('?')[0]);
+                    for (var j = 0; j < this.imagesFromUpload.length; j++) {
+                        if (this.imagesFromUpload[j].fid === res.config.data.get('fid')) {
+                            this.imagesFromUpload[j].id = res.data.id;
+                            this.imagesFromUpload[j].url = res.data.url;
+                            this.imagesFromUpload[j].fid = undefined;
+                            break;
+                        }
+                    }
+                });
+            });
         },
         getImagesFromBlog: function(event) {
             var vm = this;
