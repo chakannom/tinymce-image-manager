@@ -1,5 +1,3 @@
-Vue.prototype.$http = axios;
-
 var imageManagerApp = new Vue({
     el: '#imageManagerApp',
     data: {
@@ -44,10 +42,11 @@ var imageManagerApp = new Vue({
                         this.webStorageTokenName = decodeURIComponent(queryParamMap['ws_tn']);
                     }
                 }
-                this.$http.defaults.baseURL = this.baseUrl;
+                axios.defaults.baseURL = this.baseUrl;
                 var authenticationToken = this.getToken(this.webStorageTokenName);
+                authenticationToken = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTUzNjA2NTQxNH0.-Fqp0TWI_Xb2Ij4HvDF6ymbbqkr5pv26Ty8lXQCARmNKvr0VGXbTYWil9SMs2tsR0zgedEqfTOQwEU30GiYulg';
                 if (typeof authenticationToken === 'string') {
-                    this.$http.defaults.headers.common['Authorization'] = 'Bearer ' + authenticationToken;
+                    axios.defaults.headers.common['Authorization'] = 'Bearer ' + authenticationToken;
                 }
             }
         },
@@ -83,7 +82,7 @@ var imageManagerApp = new Vue({
             formData.append('uploadFile', file);
             formData.append('filename', file.name);
             formData.append('fid', fid);
-            this.$http.post(this.imageFromUploadUrl, formData).then(function (response) {
+            axios.post(this.imageFromUploadUrl, formData).then(function (response) {
                 for (var j = 0; j < this.imagesFromUpload.length; j++) {
                     if (this.imagesFromUpload[j].fid === response.config.data.get('fid')) {
                         this.imagesFromUpload[j].id = response.data.id;
@@ -95,14 +94,16 @@ var imageManagerApp = new Vue({
             });
         },
         uploadPresignedPutUrl: function(file, fid) {
-            this.$http.get(this.presignedPutUrl, { params: { filename: file.name } }).then(function (response) {
-                this.$http.put(response.body.url, file).then(function (res) {
-                    console.log(res.url.split('?')[0]);
-                    for (var j = 0; j < this.imagesFromUpload.length; j++) {
-                        if (this.imagesFromUpload[j].fid === res.config.data.get('fid')) {
-                            this.imagesFromUpload[j].id = res.data.id;
-                            this.imagesFromUpload[j].url = res.data.url;
-                            this.imagesFromUpload[j].fid = undefined;
+            var vm = this;
+            axios.get(this.presignedPutUrl, { params: { filename: 'user.png' } }).then(function (response) {
+                axios.put(response.data.url, file).then(function (res) {
+                    console.log(res.config.url.split('?')[0]);
+                    console.log(res);
+                    for (var j = 0; j < vm.imagesFromUpload.length; j++) {
+                        if (vm.imagesFromUpload[j].fid === res.config.data.get('fid')) {
+                            vm.imagesFromUpload[j].id = res.data.id;
+                            vm.imagesFromUpload[j].url = res.data.url;
+                            vm.imagesFromUpload[j].fid = undefined;
                             break;
                         }
                     }
@@ -111,7 +112,7 @@ var imageManagerApp = new Vue({
         },
         getImagesFromBlog: function(event) {
             var vm = this;
-            this.$http.get(this.imagesFromBlogUrl).then(function(response) {
+            axios.get(this.imagesFromBlogUrl).then(function(response) {
                 vm.imagesFromBlog = response.data;
             });
         }
