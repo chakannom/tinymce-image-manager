@@ -25,7 +25,7 @@ const plugin = (editor: any, url: String) => {
         // Open window
         editor.windowManager.open({
             title: 'Insert image',
-            url: appUrl,
+            html: '<iframe id="cks_image_iframe" src="' + appUrl + '" tabindex="-1"></iframe>',
             width : 750,
             height : 450,
             buttons: [
@@ -33,6 +33,9 @@ const plugin = (editor: any, url: String) => {
                     text: 'Insert image',
                     subtype: 'primary',
                     onclick: function(e) {
+                        const iframeDoc = (<HTMLIFrameElement>document.getElementById('cks_image_iframe')).contentDocument;
+                        const activeTabElmt = (<HTMLElement>iframeDoc.getElementsByClassName('cks-image-tab active')[0]);
+                        console.log(activeTabElmt);
                         this.parent().parent().close();
                     }
                 },
