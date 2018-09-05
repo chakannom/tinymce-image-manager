@@ -20,7 +20,7 @@
                 </div>
                 <div class="row img-container" style="margin-top: 0; padding-top: 96px;">
                     <div class="img-container-item" v-for="image in imagesFromUpload">
-                        <b-img v-bind:id="image.id" thumbnail v-bind:src="image.url" v-bind:class="{ 'img-blur': !image.id }"/>
+                        <b-img v-bind:src="image.url" v-bind:class="{ 'img-blur': image.fuid }" thumbnail/>
                     </div>
                 </div>
                 <div class="image-manager-uploaded-image"></div>
@@ -30,7 +30,7 @@
         <b-tab title="From List" @click="getImagesFromBlog($event)" no-body>
             <div class="row img-container">
                 <div class="img-container-item" v-for="image in imagesFromBlog">
-                    <b-img v-bind:id="image.id" thumbnail v-bind:src="image.url"/>
+                    <b-img v-bind:src="image.url" thumbnail/>
                 </div>
             </div>
         </b-tab>

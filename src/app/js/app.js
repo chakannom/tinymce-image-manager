@@ -62,7 +62,7 @@ var imageManagerApp = new Vue({
                 var reader = new FileReader();
                 reader.onload = (function(file) {
                     return function(e) {
-                        var images = {id: undefined, url: e.target.result, fuid: uuidv4()};
+                        var images = {url: e.target.result, fuid: uuidv4()};
                         vm.imagesFromUpload.push(images);
                         if (!vm.presignedPutUrl) {
                             vm.uploadFormData(file, images.fuid);
@@ -82,7 +82,6 @@ var imageManagerApp = new Vue({
             axios.post(vm.imageFromUploadUrl, formData).then(function (response) {
                 for (var j = 0; j < vm.imagesFromUpload.length; j++) {
                     if (vm.imagesFromUpload[j].fuid === fuid) {
-                        vm.imagesFromUpload[j].id = response.data.id;
                         vm.imagesFromUpload[j].url = response.data.url;
                         vm.imagesFromUpload[j].fuid = undefined;
                         break;
@@ -95,11 +94,8 @@ var imageManagerApp = new Vue({
             axios.get(vm.presignedPutUrl, { params: { filename: file.name } }).then(function (response) {
                 axios.put(response.data.url, file).then(function (res) {
                     var imageUrl = res.config.url.split('?')[0];
-                    var tmp = imageUrl.split('/');
-                    var imageId = tmp[tmp.length - 2];
                     for (var j = 0; j < vm.imagesFromUpload.length; j++) {
                         if (vm.imagesFromUpload[j].fuid === fuid) {
-                            vm.imagesFromUpload[j].id = imageId;
                             vm.imagesFromUpload[j].url = imageUrl;
                             vm.imagesFromUpload[j].fuid = undefined;
                             break;
