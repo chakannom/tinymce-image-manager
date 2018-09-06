@@ -106,6 +106,7 @@ var imageManagerApp = new Vue({
         },
         getImagesFromBlog: function(event) {
             var vm = this;
+            vm.imagesFromBlogUrl = '/sample/imagesFromBlog.json';
             axios.get(vm.imagesFromBlogUrl).then(function(response) {
                 vm.imagesFromBlog = response.data;
             });

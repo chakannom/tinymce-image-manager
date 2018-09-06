@@ -26,7 +26,9 @@
         <b-tab title="From List" @click="getImagesFromBlog($event)" class="cks-image-tab" no-body>
             <div class="row img-container">
                 <div class="img-container-item" v-for="image in imagesFromBlog">
-                    <b-img v-bind:src="image.url" thumbnail/>
+                    <b-form-checkbox>
+                        <b-img v-bind:src="image.url" thumbnail/>
+                    </b-form-checkbox>
                 </div>
             </div>
         </b-tab>

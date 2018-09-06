@@ -37,6 +37,20 @@ ul:focus {
     margin-left: 10px;
     margin-bottom:10px;
 }
+.img-container-item .custom-checkbox {
+    margin-right: 0;
+    padding-left: 0;
+}
+.img-container-item input[type=checkbox] {
+    display: none;
+}
+.img-container-item .custom-checkbox > label::before,
+.img-container-item .custom-checkbox > label::after {
+    top: 8px !important;
+    right: 8px !important;
+    left: initial !important;
+    z-index: 100;
+}
 .img-thumbnail {
     position: relative;
     cursor: pointer;
@@ -48,7 +62,7 @@ ul:focus {
 }
 .selected.img-container-item .img-thumbnail,
 .img-container-item:hover > .img-thumbnail {
-    border-color: #fd7e14;
+    border-color: #007bff;
 }
 .select-file,
 .img-container-item .img-thumbnail {
