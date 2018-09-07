@@ -110,6 +110,15 @@ var imageManagerApp = new Vue({
             axios.get(vm.imagesFromBlogUrl).then(function(response) {
                 vm.imagesFromBlog = response.data;
             });
+        },
+        clickItem: function (elmtId) {
+            var elmt = this.$el.querySelector('#' + elmtId);
+            var classList = elmt.className.split(' ');
+            if (classList.indexOf('selected') < 0) {
+                elmt.className += ' selected';
+            } else {
+                elmt.className = elmt.className.replace(/\b selected\b/g, '');
+            }
         }
     }
 });
