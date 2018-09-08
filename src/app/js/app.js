@@ -6,7 +6,7 @@ var imageManagerApp = new Vue({
         imageFromUploadUrl: '/sample/imageFromUpload.json',
         imagesFromUpload: [],
         imagesFromBlogUrl: '/sample/imagesFromBlog.json',
-        imagesFromBlog: [],
+        imagesFromBlog: undefined,
         webStorageTokenName: 'sampleAuthToken'
     },
     created: function() {
@@ -106,6 +106,7 @@ var imageManagerApp = new Vue({
         },
         getImagesFromBlog: function(event) {
             var vm = this;
+            vm.imagesFromBlog = undefined;
             vm.imagesFromBlogUrl = '/sample/imagesFromBlog.json';
             axios.get(vm.imagesFromBlogUrl).then(function(response) {
                 vm.imagesFromBlog = response.data;

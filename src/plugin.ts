@@ -33,9 +33,15 @@ const plugin = (editor: any, url: String) => {
                     text: 'Insert image',
                     subtype: 'primary',
                     onclick: function(e) {
+                        const dom = editor.dom;
                         const iframeDoc = (<HTMLIFrameElement>document.getElementById('cks_image_iframe')).contentDocument;
                         const activeTabElmt = (<HTMLElement>iframeDoc.getElementsByClassName('cks-image-tab active')[0]);
-                        console.log(activeTabElmt);
+                        const selectedItems = activeTabElmt.getElementsByClassName('img-container-item selected');
+                        for (let i = 0; i < selectedItems.length; i++) {
+                            const imgSrc = (<HTMLImageElement>selectedItems[i].getElementsByClassName('img-thumbnail')[0]).src;
+                            const imgElm = dom.createHTML('img', { src: imgSrc, width: '100px' });
+                            editor.insertContent(imgElm);
+                        }
                         this.parent().parent().close();
                     }
                 },
