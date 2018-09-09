@@ -39,8 +39,9 @@ const plugin = (editor: any, url: String) => {
                         const selectedItems = activeTabElmt.getElementsByClassName('img-container-item selected');
                         for (let i = 0; i < selectedItems.length; i++) {
                             const imgSrc = (<HTMLImageElement>selectedItems[i].getElementsByClassName('img-thumbnail')[0]).src;
-                            const imgElm = dom.createHTML('img', { src: imgSrc, width: '100px' });
-                            editor.insertContent(imgElm);
+                            const imgElmt = dom.createHTML('img', { src: imgSrc, border: '0' });
+                            const linkElmt = dom.createHTML('a', { href: imgSrc }, imgElmt);
+                            editor.insertContent(linkElmt);
                         }
                         this.parent().parent().close();
                     }
