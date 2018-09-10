@@ -34,10 +34,37 @@ const getTokenName = function (editor) {
     return 'ws_tn=' + encodeURIComponent(tokenName);
 };
 
+const getImgproxyKey = function (editor) {
+    let imgproxyKey = getParams(editor)['imgproxy_key'];
+    if (imgproxyKey === undefined) {
+        imgproxyKey = 'imgproxy_key';
+    }
+    return imgproxyKey;
+};
+
+const getImgproxySalt = function (editor) {
+    let imgproxySalt = getParams(editor)['imgproxy_salt'];
+    if (imgproxySalt === undefined) {
+        imgproxySalt = 'imgproxy_salt';
+    }
+    return imgproxySalt;
+};
+
+const getImgproxyUrl = function (editor) {
+    let imgproxyUrl = getParams(editor)['imgproxy_url'];
+    if (imgproxyUrl === undefined) {
+        imgproxyUrl = 'imgproxy_url';
+    }
+    return imgproxyUrl;
+};
+
 export default {
     getBaseUrlQuery,
     getPresignedPutUrlQuery,
     getImageFromUploadUrlQuery,
     getImagesFromBlogUrlQuery,
-    getTokenName
+    getTokenName,
+    getImgproxyKey,
+    getImgproxySalt,
+    getImgproxyUrl
 };

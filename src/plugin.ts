@@ -1,5 +1,6 @@
 import * as kebabCase from 'lodash/kebabCase';
 import settings from './api/settings';
+import imgproxy from './api/imgproxy';
 
 const plugin = (editor: any, url: String) => {
     const queryParamList = [];
@@ -14,6 +15,11 @@ const plugin = (editor: any, url: String) => {
     if (imagesFromBlogUrlQuery !== undefined) queryParamList.push(imagesFromBlogUrlQuery);
     if (tokenName !== undefined) queryParamList.push(tokenName);
     const appUrl = url + '/app/index.html?q=' + encodeURIComponent(btoa(queryParamList.join('&')));
+    const imgproxySettings = {
+        key: settings.getImgproxyKey(editor),
+        salt: settings.getImgproxySalt(editor),
+        url: settings.getImgproxyUrl(editor)
+    }
 
     editor.addButton('ckn_image', {
         icon: 'image',
@@ -39,9 +45,11 @@ const plugin = (editor: any, url: String) => {
                         const selectedItems = activeTabElmt.getElementsByClassName('img-container-item selected');
                         for (let i = 0; i < selectedItems.length; i++) {
                             const imgSrc = (<HTMLImageElement>selectedItems[i].getElementsByClassName('img-thumbnail')[0]).src;
+                            const imgProxySrc = imgproxy.createImgproxySignatureUrl('fit', 120, 120, 'ce', 0, imgSrc, 'png', imgproxySettings);
+                            console.log(imgProxySrc);
+
                             const imgElmt = dom.createHTML('img', { src: imgSrc, border: '0' });
-                            const linkElmt = dom.createHTML('a', { href: imgSrc }, imgElmt);
-                            editor.insertContent(linkElmt);
+                            editor.insertContent(imgElmt);
                         }
                         this.parent().parent().close();
                     }
