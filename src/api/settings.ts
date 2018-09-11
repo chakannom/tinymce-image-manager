@@ -35,27 +35,15 @@ const getTokenName = function (editor) {
 };
 
 const getImgproxyUrl = function (editor) {
-    let imgproxyUrl = getParams(editor)['imgproxy_url'];
-    if (imgproxyUrl === undefined) {
-        imgproxyUrl = 'imgproxy_url';
-    }
-    return imgproxyUrl;
+    return getParams(editor)['imgproxy_url'];
 };
 
 const getImgproxyKey = function (editor) {
-    let imgproxyKey = getParams(editor)['imgproxy_key'];
-    if (imgproxyKey === undefined) {
-        imgproxyKey = 'imgproxy_key';
-    }
-    return imgproxyKey;
+    return getParams(editor)['imgproxy_key'];
 };
 
 const getImgproxySalt = function (editor) {
-    let imgproxySalt = getParams(editor)['imgproxy_salt'];
-    if (imgproxySalt === undefined) {
-        imgproxySalt = 'imgproxy_salt';
-    }
-    return imgproxySalt;
+    return getParams(editor)['imgproxy_salt'];
 };
 
 export default {

@@ -44,9 +44,7 @@ const plugin = (editor: any, url: String) => {
                         const activeTabElmt = (<HTMLElement>iframeDoc.getElementsByClassName('cks-image-tab active')[0]);
                         const selectedItems = activeTabElmt.getElementsByClassName('img-container-item selected');
                         for (let i = 0; i < selectedItems.length; i++) {
-                            const imgSrc = (<HTMLImageElement>selectedItems[i].getElementsByClassName('img-thumbnail')[0]).src;
-                            // const imgProxySrc = imgproxy.createImgproxySignatureUrl('fit', 320, 320, 'ce', 0, imgSrc, 'png', imgproxySettings);
-                            // console.log(imgProxySrc);
+                            const imgSrc = getImageUrl((<HTMLImageElement>selectedItems[i].getElementsByClassName('img-thumbnail')[0]).src);
                             const imgElmt = dom.createHTML('img', { src: imgSrc, border: '0' });
                             editor.insertContent(imgElmt);
                         }
@@ -66,6 +64,14 @@ const plugin = (editor: any, url: String) => {
                 editor.insertContent(kebabbyString);
             }
         });
+    }
+
+    function getImageUrl(src) {
+        let imageUrl = src;
+        if (imgproxySettings.url !== undefined && imgproxySettings.key !== undefined && imgproxySettings.salt !== undefined) {
+            imageUrl = imgproxy.createImgproxySignatureUrl('fit', 320, 320, 'ce', 0, src, 'png', imgproxySettings);
+        }
+        return imageUrl;
     }
 };
 

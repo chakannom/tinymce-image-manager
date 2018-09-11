@@ -11,8 +11,8 @@ const createImgproxySignatureUrl = function (
     extension: string,
     settings: any
 ) {
-    const urlSafeBase64 = string =>
-        new Buffer(string)
+    const urlSafeBase64 = str =>
+        new Buffer(str)
             .toString('base64')
             .replace(/=/g, '')
             .replace(/\+/g, '-')
