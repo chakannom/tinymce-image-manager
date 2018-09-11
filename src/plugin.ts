@@ -16,9 +16,9 @@ const plugin = (editor: any, url: String) => {
     if (tokenName !== undefined) queryParamList.push(tokenName);
     const appUrl = url + '/app/index.html?q=' + encodeURIComponent(btoa(queryParamList.join('&')));
     const imgproxySettings = {
+        url: settings.getImgproxyUrl(editor),
         key: settings.getImgproxyKey(editor),
-        salt: settings.getImgproxySalt(editor),
-        url: settings.getImgproxyUrl(editor)
+        salt: settings.getImgproxySalt(editor)
     }
 
     editor.addButton('ckn_image', {
@@ -45,9 +45,8 @@ const plugin = (editor: any, url: String) => {
                         const selectedItems = activeTabElmt.getElementsByClassName('img-container-item selected');
                         for (let i = 0; i < selectedItems.length; i++) {
                             const imgSrc = (<HTMLImageElement>selectedItems[i].getElementsByClassName('img-thumbnail')[0]).src;
-                            const imgProxySrc = imgproxy.createImgproxySignatureUrl('fit', 120, 120, 'ce', 0, imgSrc, 'png', imgproxySettings);
-                            console.log(imgProxySrc);
-
+                            // const imgProxySrc = imgproxy.createImgproxySignatureUrl('fit', 320, 320, 'ce', 0, imgSrc, 'png', imgproxySettings);
+                            // console.log(imgProxySrc);
                             const imgElmt = dom.createHTML('img', { src: imgSrc, border: '0' });
                             editor.insertContent(imgElmt);
                         }

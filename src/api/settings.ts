@@ -34,6 +34,14 @@ const getTokenName = function (editor) {
     return 'ws_tn=' + encodeURIComponent(tokenName);
 };
 
+const getImgproxyUrl = function (editor) {
+    let imgproxyUrl = getParams(editor)['imgproxy_url'];
+    if (imgproxyUrl === undefined) {
+        imgproxyUrl = 'imgproxy_url';
+    }
+    return imgproxyUrl;
+};
+
 const getImgproxyKey = function (editor) {
     let imgproxyKey = getParams(editor)['imgproxy_key'];
     if (imgproxyKey === undefined) {
@@ -50,21 +58,13 @@ const getImgproxySalt = function (editor) {
     return imgproxySalt;
 };
 
-const getImgproxyUrl = function (editor) {
-    let imgproxyUrl = getParams(editor)['imgproxy_url'];
-    if (imgproxyUrl === undefined) {
-        imgproxyUrl = 'imgproxy_url';
-    }
-    return imgproxyUrl;
-};
-
 export default {
     getBaseUrlQuery,
     getPresignedPutUrlQuery,
     getImageFromUploadUrlQuery,
     getImagesFromBlogUrlQuery,
     getTokenName,
+    getImgproxyUrl,
     getImgproxyKey,
-    getImgproxySalt,
-    getImgproxyUrl
+    getImgproxySalt
 };

@@ -1,4 +1,4 @@
-import * as crypto from 'crypto';
+import * as createHmac from 'create-hmac';
 import { Buffer } from 'buffer';
 
 const createImgproxySignatureUrl = function (
@@ -11,7 +11,6 @@ const createImgproxySignatureUrl = function (
     extension: string,
     settings: any
 ) {
-    console.log(crypto);
     const urlSafeBase64 = string =>
         new Buffer(string)
             .toString('base64')
@@ -23,7 +22,7 @@ const createImgproxySignatureUrl = function (
     const encoded_url = urlSafeBase64(non_encoding_url);
     const path = `/${resizing_type}/${width}/${height}/${gravity}/${enlarge}/${encoded_url}.${extension}`;
 
-    const hmac = crypto.createHmac('sha256', hexDecode(settings.key));
+    const hmac = createHmac('sha256', hexDecode(settings.key));
     hmac.update(hexDecode(settings.salt));
     hmac.update(path);
 
