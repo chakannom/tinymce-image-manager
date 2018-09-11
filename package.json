@@ -9,7 +9,7 @@
     "lint": "tslint 'src/**/*.js'",
     "build": "webpack --config config/webpack.config.prod.js --progress"
   },
-  "author": "",
+  "author": "chakananom",
   "license": "cc-by-nc-sa-4.0",
   "devDependencies": {
     "copy-webpack-plugin": "^4.0.1",
