@@ -1,8 +1,8 @@
-const path = require("path");
-const webpack = require("webpack");
-const CopyWebpackPlugin = require("copy-webpack-plugin");
+var path = require("path");
+var webpack = require("webpack");
+var CopyWebpackPlugin = require("copy-webpack-plugin");
 
-const pluginName = "cks_image";
+var pluginName = "cks_image";
 
 module.exports = {
     entry: {
