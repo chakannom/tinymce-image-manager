@@ -7,13 +7,13 @@
             selector:'textarea',
             forced_root_block : 'div',
             plugins: "preview",
-            toolbar: 'ckn_image preview',
+            toolbar: 'cks_image preview',
             height : '200',
             object_resizing : false,
             external_plugins: {
-                'ckn_image': 'http://localhost:8080/plugin.js'
+                'cks_image': 'http://localhost:8080/plugin.js'
             },
-            ckn_image_params: {
+            cks_image_params: {
                 base_url: 'http://localhost:8080/app',
                 presigned_put_url: '/presigned-url.html',
                 image_upload_url: '/image-upload-url.html',

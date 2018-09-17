@@ -1,7 +1,7 @@
 const getParams = function (editor) {
-    const params = editor.getParam('ckn_image_params', {});
-    return params ? params : undefined
-}
+    const params = editor.getParam('cks_image_params', {});
+    return params ? params : undefined;
+};
 
 const getBaseUrlQuery = function (editor) {
     const baseUrl = getParams(editor)['base_url'];

@@ -21,7 +21,7 @@ const plugin = (editor: any, url: String) => {
         salt: settings.getImgproxySalt(editor)
     }
 
-    editor.addButton('ckn_image', {
+    editor.addButton('cks_image', {
         icon: 'image',
         tooltip: 'Insert image',
         onclick: showDialog

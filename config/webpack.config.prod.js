@@ -2,7 +2,7 @@ const path = require("path");
 const webpack = require("webpack");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 
-const pluginName = "ckn_image";
+const pluginName = "cks_image";
 
 module.exports = {
     entry: {
