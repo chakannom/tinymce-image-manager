@@ -26,12 +26,12 @@ const getImagesFromBlogUrlQuery = function (editor) {
     return 'ifb_u=' + encodeURIComponent(imagesFromBlogUrl);
 };
 
-const getTokenName = function (editor) {
-    let tokenName = getParams(editor)['token_name'];
-    if (tokenName === undefined) {
-        tokenName = 'sampleAuthToken';
+const getToken = function (editor) {
+    let token = getParams(editor)['token'];
+    if (token === undefined) {
+        token = 'sampleAuthToken';
     }
-    return 'ws_tn=' + encodeURIComponent(tokenName);
+    return 'tn=' + encodeURIComponent(token);
 };
 
 const getImgproxyUrl = function (editor) {
@@ -51,7 +51,7 @@ export default {
     getPresignedPutUrlQuery,
     getImageFromUploadUrlQuery,
     getImagesFromBlogUrlQuery,
-    getTokenName,
+    getToken,
     getImgproxyUrl,
     getImgproxyKey,
     getImgproxySalt

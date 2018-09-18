@@ -7,7 +7,7 @@ var imageManagerApp = new Vue({
         imagesFromUpload: [],
         imagesFromBlogUrl: '/sample/imagesFromBlog.json',
         imagesFromBlog: undefined,
-        webStorageTokenName: 'sampleAuthToken'
+        token: 'sampleAuthToken'
     },
     created: function() {
         this.init();
@@ -38,14 +38,13 @@ var imageManagerApp = new Vue({
                     if (queryParamMap['ifb_u'] !== undefined && queryParamMap['ifb_u'] !== '') {
                         this.imagesFromBlogUrl = decodeURIComponent(queryParamMap['ifb_u']);
                     }
-                    if (queryParamMap['ws_tn'] !== undefined && queryParamMap['ws_tn'] !== '') {
-                        this.webStorageTokenName = decodeURIComponent(queryParamMap['ws_tn']);
+                    if (queryParamMap['tn'] !== undefined && queryParamMap['tn'] !== '') {
+                        this.token = decodeURIComponent(queryParamMap['tn']);
                     }
                 }
                 axios.defaults.baseURL = this.baseUrl;
-                var authenticationToken = this.getToken(this.webStorageTokenName);
-                if (typeof authenticationToken === 'string') {
-                    axios.defaults.headers.common['Authorization'] = 'Bearer ' + authenticationToken;
+                if (typeof this.token === 'string') {
+                    axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.token;
                 }
             }
         },
