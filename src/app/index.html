@@ -32,7 +32,7 @@
             <div class="row img-container">
                 <div :id="'img-item-' + index" class="img-container-item" v-for="(image, index) in imagesFromBlog" v-on:click="clickItem('img-item-' + index)">
                     <label>
-                        <b-img v-bind:src="image.url" thumbnail/>
+                        <b-img v-bind:src="image" thumbnail/>
                     </label>
                     <div class="custom-control custom-checkbox">
                         <label class="custom-control-label">&nbsp;</label>
