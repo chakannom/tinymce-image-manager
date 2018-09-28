@@ -28,7 +28,7 @@
                 </div>
             </div>
         </b-tab>
-        <b-tab title="From List" @click="getImagesFromBlog($event)" class="cks-image-tab" no-body>
+        <b-tab title="From Blog" @click="getImagesFromBlog($event)" class="cks-image-tab" no-body>
             <div class="row img-container">
                 <div :id="'img-item-' + index" class="img-container-item" v-for="(image, index) in imagesFromBlog" v-on:click="clickItem('img-item-' + index)">
                     <label>

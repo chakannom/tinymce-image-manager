@@ -7,7 +7,8 @@ var imageManagerApp = new Vue({
         imagesFromUpload: [],
         imagesFromBlogUrl: '/sample/imagesFromBlog.json',
         imagesFromBlog: undefined,
-        token: 'sampleAuthToken'
+        token: 'sampleAuthToken',
+        isClickedFromBlog: false
     },
     created: function() {
         this.init();
@@ -105,10 +106,13 @@ var imageManagerApp = new Vue({
         },
         getImagesFromBlog: function(event) {
             var vm = this;
-            vm.imagesFromBlog = undefined;
-            axios.get(vm.imagesFromBlogUrl).then(function(response) {
-                vm.imagesFromBlog = response.data;
-            });
+            if (vm.isClickedFromBlog === false) {
+                vm.imagesFromBlog = undefined;
+                axios.get(vm.imagesFromBlogUrl).then(function (response) {
+                    vm.imagesFromBlog = response.data;
+                    vm.isClickedFromBlog = true;
+                });
+            }
         },
         clickItem: function (elmtId) {
             var elmt = this.$el.querySelector('#' + elmtId);
