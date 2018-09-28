@@ -18,7 +18,7 @@
                 <div class="select-file-message">Use a JPG, GIF, or PNG file.</div>
             </div>
             <div class="row img-container" style="margin-top: 0; padding-top: 96px;">
-                <div :id="'img-item-' + index" class="img-container-item" v-for="image in imagesFromUpload" v-on:click="clickItem('img-item-' + index)">
+                <div :id="'img-item-' + index" class="img-container-item" v-for="(image, index) in imagesFromUpload" v-on:click="clickItem('img-item-' + index)">
                     <label>
                         <b-img v-bind:src="image.url" v-bind:class="{ 'img-blur': image.fuid }" thumbnail/>
                     </label>
@@ -32,7 +32,7 @@
             <div class="row img-container">
                 <div :id="'img-item-' + index" class="img-container-item" v-for="(image, index) in imagesFromBlog" v-on:click="clickItem('img-item-' + index)">
                     <label>
-                        <b-img v-bind:src="image" thumbnail/>
+                        <b-img v-bind:src="image.url" thumbnail/>
                     </label>
                     <div class="custom-control custom-checkbox">
                         <label class="custom-control-label">&nbsp;</label>
