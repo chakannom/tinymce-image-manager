@@ -39,16 +39,8 @@ const plugin = (editor: any, url: String) => {
                     text: 'Insert image',
                     subtype: 'primary',
                     onclick: function(e) {
-                        const dom = editor.dom;
-                        const iframeDoc = (<HTMLIFrameElement>document.getElementById('cks_image_iframe')).contentDocument;
-                        const activeTabElmt = (<HTMLElement>iframeDoc.getElementsByClassName('cks-image-tab active')[0]);
-                        const selectedItems = activeTabElmt.getElementsByClassName('img-container-item selected');
-                        for (let i = 0; i < selectedItems.length; i++) {
-                            const imgSrc = getImageUrl((<HTMLImageElement>selectedItems[i].getElementsByClassName('img-thumbnail')[0]).src);
-                            const imgElmt = dom.createHTML('img', { src: imgSrc, border: '0' });
-                            editor.insertContent(imgElmt);
-                        }
-                        this.parent().parent().close();
+                        const iframeWindow = (<HTMLIFrameElement>document.getElementById('cks_image_iframe')).contentWindow;
+                        iframeWindow.postMessage({ event: 'get-image-src-list' }, url.toString());
                     }
                 },
                 {
@@ -73,6 +65,20 @@ const plugin = (editor: any, url: String) => {
         }
         return imageUrl;
     }
+
+    // Event listener
+    window.addEventListener('message', function (e) {
+        if (e.data.event === 'get-image-src-list') {
+            const dom = editor.dom;
+            const items = e.data.data;
+            for (let i = 0; i < items.length; i++) {
+                const imgSrc = getImageUrl(items[i]);
+                const imgElmt = dom.createHTML('img', { src: imgSrc, border: '0' });
+                editor.insertContent(imgElmt);
+            }
+            editor.windowManager.close();
+        }
+    });
 };
 
 export default plugin;

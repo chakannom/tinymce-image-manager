@@ -125,3 +125,16 @@ var imageManagerApp = new Vue({
         }
     }
 });
+
+// Event listener
+window.addEventListener('message', function (e) {
+    if (e.data.event === 'get-image-src-list') {
+        var imageUrls = [];
+        var activeTabElmt = document.getElementsByClassName('cks-image-tab active')[0];
+        var selectedItems = activeTabElmt.getElementsByClassName('img-container-item selected');
+        for (var i = 0; i < selectedItems.length; i++) {
+            imageUrls.push(selectedItems[i].getElementsByClassName('img-thumbnail')[0].src);
+        }
+        parent.postMessage({ event: 'get-image-src-list', data: imageUrls }, e.origin);
+    }
+});
