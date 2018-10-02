@@ -12,6 +12,7 @@ var imageManagerApp = new Vue({
     },
     created: function() {
         this.init();
+        this.initImagesFromBlog();
     },
     methods: {
         init: function() {
@@ -47,6 +48,16 @@ var imageManagerApp = new Vue({
                 if (typeof this.token === 'string') {
                     axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.token;
                 }
+            }
+        },
+        initImagesFromBlog: function() {
+            var vm = this;
+            if (vm.isClickedFromBlog === false) {
+                vm.imagesFromBlog = undefined;
+                axios.get(vm.imagesFromBlogUrl).then(function (response) {
+                    vm.imagesFromBlog = response.data;
+                    vm.isClickedFromBlog = true;
+                });
             }
         },
         getToken: function(tokenName) {
@@ -103,16 +114,6 @@ var imageManagerApp = new Vue({
                     }
                 });
             });
-        },
-        getImagesFromBlog: function(event) {
-            var vm = this;
-            if (vm.isClickedFromBlog === false) {
-                vm.imagesFromBlog = undefined;
-                axios.get(vm.imagesFromBlogUrl).then(function (response) {
-                    vm.imagesFromBlog = response.data;
-                    vm.isClickedFromBlog = true;
-                });
-            }
         },
         clickItem: function (elmtId) {
             var elmt = this.$el.querySelector('#' + elmtId);
