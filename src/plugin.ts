@@ -27,6 +27,13 @@ const plugin = (editor: any, url: String) => {
         onclick: showDialog
     });
 
+    editor.addMenuItem('cks_image', {
+        icon: 'image',
+        text: 'Image',
+        context: 'insert',
+        onclick: showDialog
+    });
+
     function showDialog() {
         // Open window
         editor.windowManager.open({
