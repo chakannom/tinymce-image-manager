@@ -31,8 +31,6 @@ const plugin = (editor: any, url: String) => {
         icon: 'image',
         text: 'Image',
         context: 'insert',
-        shortcut: 'Meta+I',
-        stateSelector: 'img[src]',
         prependToContext: true,
         onclick: showDialog
     });
