@@ -1,46 +1,46 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0">
-<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"/>
-<link type="text/css" rel="stylesheet" href="css/bootstrap-vue.min.css"/>
-<link type="text/css" rel="stylesheet" href="css/main.css">
-<title>Chakannom Image Manager for TinyMCE4</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0">
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+  <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"/>
+  <link type="text/css" rel="stylesheet" href="css/bootstrap-vue.min.css"/>
+  <link type="text/css" rel="stylesheet" href="css/app.css">
+  <title>Chakannom Image Manager for TinyMCE4</title>
 </head>
 <body>
 <div id="imageManagerApp">
-    <b-tabs card>
-        <b-tab title="Upload" class="cks-image-tab" no-body active>
-            <div class="select-file-container">
-                <b-button variant="primary" size="sm" class="select-file" v-on:click="selectFile($event)">Select File</b-button>
-                <input type="file" id="select_file" style="height: 0px; visibility: hidden; position: absolute;" accept="image/*" @change="uploadFiles($event)" multiple/>
-                <div class="select-file-message">Use a JPG, GIF, or PNG file.</div>
-            </div>
-            <div class="row img-container" style="margin-top: 0; padding-top: 96px;">
-                <div :id="'img-item-' + index" class="img-container-item" v-for="(image, index) in imagesFromUpload" @click="clickItem('img-item-' + index)">
-                    <label>
-                        <b-img v-bind:src="image.url" v-bind:class="{ 'img-blur': image.fuid }" thumbnail/>
-                    </label>
-                    <div class="custom-control custom-checkbox">
-                        <label class="custom-control-label">&nbsp;</label>
-                    </div>
-                </div>
-            </div>
-        </b-tab>
-        <b-tab title="From Blog" class="cks-image-tab" no-body>
-            <div class="row img-container">
-                <div :id="'img-item-' + index" class="img-container-item" v-for="(image, index) in imagesFromBlog" @click="clickItem('img-item-' + index)">
-                    <label>
-                        <b-img v-bind:src="image.url" thumbnail/>
-                    </label>
-                    <div class="custom-control custom-checkbox">
-                        <label class="custom-control-label">&nbsp;</label>
-                    </div>
-                </div>
-            </div>
-        </b-tab>
-    </b-tabs>
+  <b-tabs card>
+    <b-tab title="Upload" class="cks-image-tab" no-body active>
+      <div class="select-file-container">
+        <b-button variant="primary" size="sm" class="select-file" v-on:click="selectFile($event)">Select File</b-button>
+        <input type="file" id="select_file" style="height: 0px; visibility: hidden; position: absolute;" accept="image/*" @change="uploadFiles($event)" multiple/>
+        <div class="select-file-message">Use a JPG, GIF, or PNG file.</div>
+      </div>
+      <div class="row img-container" style="margin-top: 0; padding-top: 96px;">
+        <div :id="'img-item-' + index" class="img-container-item" v-for="(image, index) in imagesFromUpload" @click="clickItem('img-item-' + index)">
+          <label>
+            <b-img v-bind:src="image.url" v-bind:class="{ 'img-blur': image.fuid }" thumbnail/>
+          </label>
+          <div class="custom-control custom-checkbox">
+            <label class="custom-control-label">&nbsp;</label>
+          </div>
+        </div>
+      </div>
+    </b-tab>
+    <b-tab title="Images" class="cks-image-tab" no-body>
+      <div class="row img-container">
+        <div :id="'img-item-' + index" class="img-container-item" v-for="(image, index) in images" @click="clickItem('img-item-' + index)">
+          <label>
+            <b-img v-bind:src="image.url" thumbnail/>
+          </label>
+          <div class="custom-control custom-checkbox">
+            <label class="custom-control-label">&nbsp;</label>
+          </div>
+        </div>
+      </div>
+    </b-tab>
+  </b-tabs>
 </div>
 <script src="js/uuid-v4.js"></script>
 <script src="js/vue.min.js"></script>

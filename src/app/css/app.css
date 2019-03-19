@@ -5,7 +5,7 @@ ul:focus {
     position: fixed;
     width: 100%;
     z-index: 1000;
-    background-color: #f7f7f7;
+    background-color: #fff;
 }
 .tab-content {
     position: relative;
