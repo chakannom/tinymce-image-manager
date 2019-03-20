@@ -28,7 +28,7 @@ const collect = (editor, url): Future<ImageDialogInfo> => {
     return encodeURIComponent(btoa(queryString));
   };
 
-  const getImageUrl = async (src: string) => {
+  const getImageUrl = async function (src: string) {
     let imageUrl = src;
     if (imgproxySettings.url !== undefined && imgproxySettings.key !== undefined && imgproxySettings.salt !== undefined) {
         imageUrl = await Imgproxy.createImgproxySignatureUrl('fit', 320, 320, 'ce', 0, src, 'png', imgproxySettings);
@@ -36,7 +36,7 @@ const collect = (editor, url): Future<ImageDialogInfo> => {
     return imageUrl;
   };
 
-  const windowMessageEvent = async (e) => {
+  const windowMessageEvent = async function (e) {
     if (e.data.event === 'get-image-src-list') {
       const dom = editor.dom;
       const items = e.data.data;
